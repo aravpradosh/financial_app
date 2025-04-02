@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Statement</title>
+</head>
+<body>
+    <h1><b>Income Statement</b></h1>
+
+    <h2>Add Entry</h2>
+    <form action="/income_statement" method="post">
+        <label for="category">Category:</label>
+        <select name="category">
+            <option value="Revenue">Revenue</option>
+            <option value="COGS">COGS</option>
+            <option value="Expenses">Expenses</option>
+        </select>
+        <input type="text" name="particular" placeholder="Particular">
+        <input type="number" name="amount" placeholder="Amount">
+        <button type="submit">Add Entry</button>
+    </form>
+
+    <h2>Modify or Delete Entry</h2>
+    <form action="/modify_income" method="post">
+        <input type="text" name="particular" placeholder="Particular to Modify/Delete">
+        <input type="number" name="amount" placeholder="New Amount (if modifying)">
+        <button type="submit" name="action" value="modify">Modify Entry</button>
+        <button type="submit" name="action" value="delete">Delete Entry</button>
+    </form>
+
+    <h2>Generated Income Statement</h2>
+    <table border="1">
+        <tr>
+            <th>Category</th>
+            <th>Particulars</th>
+            <th>Amount</th>
+        </tr>
+        {% for row in income_statement %}
+        <tr>
+            <td>{{ row.Category }}</td>
+            <td>{{ row.Particulars }}</td>
+            <td>{{ row.Amount }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Summary</h2>
+    <p><b>Total Revenue:</b> {{ total_revenue }}</p>
+    <p><b>Total COGS:</b> {{ total_cogs }}</p>
+    <p><b>Gross Profit:</b> {{ gross_profit }}</p>
+    <p><b>Total Expenses:</b> {{ total_expenses }}</p>
+    <p><b>Net Profit:</b> {{ net_profit }}</p>
+
+    <br>
+    <a href="/">Back to Home</a>
+</body>
+</html>

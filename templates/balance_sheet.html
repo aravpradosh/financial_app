@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance Sheet</title>
+</head>
+<body>
+    <h1><b>Balance Sheet</b></h1>
+
+    <h2>Add Entry</h2>
+    <form action="/balance_sheet" method="post">
+        <label for="category">Category:</label>
+        <select name="category">
+            <option value="Asset">Asset</option>
+            <option value="Liability">Liability</option>
+            <option value="Equity">Equity</option>
+        </select>
+        <input type="text" name="particular" placeholder="Particular" required>
+        <input type="number" name="amount" placeholder="Amount" required step="0.01">
+        <button type="submit">Add Entry</button>
+    </form>
+
+    <h2>Modify or Delete Entry</h2>
+    <form action="/modify_balance" method="post">
+        <input type="text" name="particular" placeholder="Particular to Modify/Delete" required>
+        <input type="number" name="amount" placeholder="New Amount (if modifying)" step="0.01">
+        <button type="submit" name="action" value="modify">Modify Entry</button>
+        <button type="submit" name="action" value="delete">Delete Entry</button>
+    </form>
+
+    <h2>Generated Balance Sheet</h2>
+    <table border="1">
+        <tr>
+            <th>Category</th>
+            <th>Particulars</th>
+            <th>Amount</th>
+        </tr>
+        {% for row in balance_sheet %}
+        <tr>
+            <td>{{ row.Category }}</td>
+            <td>{{ row.Particulars }}</td>
+            <td>{{ row.Amount }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Balance Sheet Summary</h2>
+    <p><b>Total Assets:</b> {{ total_assets }}</p>
+    <p><b>Total Liabilities:</b> {{ total_liabilities }}</p>
+    <p><b>Total Equity:</b> {{ total_equity }}</p>
+    <p><b>Balance Status:</b> {{ balance_status }}</p>
+
+    {% if balance_status == "Balanced ✅" %}
+        <p style="color: green;"><b>The accounts are balanced.</b></p>
+    {% else %}
+        <p style="color: red;"><b>The accounts are not balanced!</b></p>
+    {% endif %}
+
+    <br>
+    <a href="/">Back to Home</a>
+</body>
+</html>
